@@ -1,0 +1,45 @@
+# 🧠 DocMind: Enterprise RAG Engine
+
+![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
+![LangChain](https://img.shields.io/badge/LangChain-Integration-green)
+![ChromaDB](https://img.shields.io/badge/ChromaDB-Vector_Store-orange)
+![Gemini](https://img.shields.io/badge/Google_Cloud-Gemini_3.8_Flash-blue)
+![Streamlit](https://img.shields.io/badge/Streamlit-Live_Deployed-red)
+
+**Live Demo:** [DocMind on Streamlit Cloud](https://enterprise-rag-engine-8280.streamlit.app)
+
+DocMind is a production-ready Retrieval-Augmented Generation (RAG) microservice and interactive dashboard designed to interact with complex enterprise PDFs. Built to strictly eliminate Large Language Model (LLM) hallucinations, the engine grounds all answers exclusively in uploaded documents and provides exact, page-level source citations for verification.
+
+![DocMind Demo](assets/demo/demo.png)
+
+## 🏗️ System Architecture
+
+To ensure high availability and low latency, heavy mathematical vectorization is offloaded to Google Cloud, allowing the application to run smoothly even on low-compute edge servers.
+
+1. **Document Ingestion:** `PyPDFLoader` and LangChain's `RecursiveCharacterTextSplitter` partition text into semantically overlapping 800-character chunks.
+2. **Cloud Vectorization:** Text chunks are transformed into 768-dimensional vectors using Google's latest multimodal `gemini-embedding-2` API.
+3. **Storage:** Vectors and metadata (filenames, page numbers) are persisted locally in a highly optimized **ChromaDB** HNSW index.
+4. **Retrieval & Generation:** A `k=10` similarity search retrieves the most relevant context blocks. A strict prompt template forces the **Gemini 3.8 Flash** model to synthesize an answer *only* from this retrieved context.
+
+## ✨ Key Features
+
+- **Zero-Hallucination Guardrails:** The LLM is explicitly programmed to return *"I cannot find this information in the provided document"* if the vector context lacks the necessary facts.
+- **Verifiable Citations:** Every response includes interactive expanders showing the exact source filename, page number, semantic distance score, and raw text excerpt.
+- **FastAPI Microservice Ready:** Includes a `main.py` REST API backend for programmatic ingestion (`/api/v1/ingest`) and querying (`/api/v1/query`).
+- **Interactive UI:** Built with Streamlit, featuring asynchronous background chunking, dynamic state management, and a 1-click "Copy to Clipboard" export utility.
+
+## 🚀 Local Installation & Setup
+
+Clone the repository and spin up the environment:
+
+```bash
+# Clone the repository
+git clone [https://github.com/ahmedrayyan8280/enterprise-rag-engine.git](https://github.com/ahmedrayyan8280/enterprise-rag-engine.git)
+cd enterprise-rag-engine
+
+# Create and activate a virtual environment
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .\.venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt

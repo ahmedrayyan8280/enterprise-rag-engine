@@ -42,26 +42,34 @@ query = st.text_input("Ask a question about your indexed document:", placeholder
 
 if query:
     with st.spinner("Retrieving vector contexts & generating response..."):
-        engine = RAGEngine()
-        results = engine.query(query, k=10)
+        try:
+            engine = RAGEngine()
+            results = engine.query(query, k=10)
 
-    st.subheader("💡 Answer")
-    st.write(results["answer"])
+            st.subheader("💡 Answer")
+            st.write(results["answer"])
 
-    # ADDED: Interactive Copy to Clipboard Button
-    st_copy_to_clipboard(
-        text=results["answer"],
-        before_copy_label="📋 Copy Answer",
-        after_copy_label="✅ Copied to Clipboard!"
-    )
+            st_copy_to_clipboard(
+                text=results["answer"],
+                before_copy_label="📋 Copy Answer",
+                after_copy_label="✅ Copied to Clipboard!"
+            )
 
-    st.markdown("---")
-    st.subheader("📌 Retrieved Source Citations")
+            st.markdown("---")
+            st.subheader("📌 Retrieved Source Citations")
 
-    if results["citations"]:
-        for i, citation in enumerate(results["citations"], 1):
-            with st.expander(f"Source {i}: {citation['source']} (Page {citation['page']}) — Distance: {citation['relevance_score']}"):
-                st.write(f"**Text Excerpt:**")
-                st.info(f'"{citation["excerpt"]}"')
-    else:
-        st.warning("No context chunks retrieved.")
+            if results["citations"]:
+                for i, citation in enumerate(results["citations"], 1):
+                    with st.expander(f"Source {i}: {citation['source']} (Page {citation['page']}) — Distance: {citation['relevance_score']}"):
+                        st.write(f"**Text Excerpt:**")
+                        st.info(f'"{citation["excerpt"]}"')
+            else:
+                st.warning("No context chunks retrieved.")
+
+        except Exception as e:
+            # Gracefully catch Google API overloads
+            error_msg = str(e)
+            if "503" in error_msg or "UNAVAILABLE" in error_msg or "high demand" in error_msg:
+                st.warning("⚠️ **Google AI servers are currently experiencing high demand.** Please wait a few seconds and try again.")
+            else:
+                st.error(f"⚠️ **An unexpected error occurred:** {error_msg}")
