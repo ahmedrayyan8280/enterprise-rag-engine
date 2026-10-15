@@ -35,7 +35,7 @@ st.sidebar.markdown("---")
 st.sidebar.markdown("**System Architecture:**")
 st.sidebar.markdown("- **Embeddings:** Google Cloud (gemini-embedding-2)")
 st.sidebar.markdown("- **Vector Store:** ChromaDB (HNSW)")
-st.sidebar.markdown("- **LLM:** Google Gemini 3.8 Flash Lite")
+st.sidebar.markdown("- **LLM:** Google Gemini 3.1 Flash Lite")
 
 # Main Query Interface
 query = st.text_input("Ask a question about your indexed document:", placeholder="e.g., What are the key findings?")

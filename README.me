@@ -3,7 +3,7 @@
 ![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
 ![LangChain](https://img.shields.io/badge/LangChain-Integration-green)
 ![ChromaDB](https://img.shields.io/badge/ChromaDB-Vector_Store-orange)
-![Gemini](https://img.shields.io/badge/Google_Cloud-Gemini_3.8_Flash-blue)
+![Gemini](https://img.shields.io/badge/Google_Cloud-Gemini_3.1_Flash_lite-blue)
 ![Streamlit](https://img.shields.io/badge/Streamlit-Live_Deployed-red)
 
 **Live Demo:** [DocMind on Streamlit Cloud](https://enterprise-rag-engine-8280.streamlit.app)
@@ -19,7 +19,7 @@ To ensure high availability and low latency, heavy mathematical vectorization is
 1. **Document Ingestion:** `PyPDFLoader` and LangChain's `RecursiveCharacterTextSplitter` partition text into semantically overlapping 800-character chunks.
 2. **Cloud Vectorization:** Text chunks are transformed into 768-dimensional vectors using Google's latest multimodal `gemini-embedding-2` API.
 3. **Storage:** Vectors and metadata (filenames, page numbers) are persisted locally in a highly optimized **ChromaDB** HNSW index.
-4. **Retrieval & Generation:** A `k=10` similarity search retrieves the most relevant context blocks. A strict prompt template forces the **Gemini 3.8 Flash** model to synthesize an answer *only* from this retrieved context.
+4. **Retrieval & Generation:** A `k=10` similarity search retrieves the most relevant context blocks. A strict prompt template forces the **Gemini 3.1 Flash Lite** model to synthesize an answer *only* from this retrieved context.
 
 ## ✨ Key Features
 

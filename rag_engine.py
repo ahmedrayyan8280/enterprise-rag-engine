@@ -32,7 +32,7 @@ class RAGEngine:
             embedding_function=self.embeddings
         )
         self.llm = ChatGoogleGenerativeAI(
-            model="gemini-3.8-flash-lite",
+            model="gemini-3.1-flash-lite",
             temperature=0.0,
             google_api_key=os.getenv("GEMINI_API_KEY")
         )
