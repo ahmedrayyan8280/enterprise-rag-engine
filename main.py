@@ -24,7 +24,7 @@ def health_check():
         "status": "online",
         "service": "DocMind RAG Engine",
         "embedding_model": "models/gemini-embedding-2",
-        "llm_backbone": "gemini-3.8-flash"
+        "llm_backbone": "gemini-3.8-flash-lite"
     }
 
 @app.post("/api/v1/ingest")
