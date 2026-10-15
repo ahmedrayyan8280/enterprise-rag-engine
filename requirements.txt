@@ -1,0 +1,13 @@
+fastapi>=0.110.0
+uvicorn[standard]>=0.28.0
+python-multipart>=0.0.9
+streamlit>=1.32.0
+langchain>=0.1.14
+langchain-community>=0.0.31
+langchain-google-genai>=1.0.1
+chromadb>=0.4.24
+sentence-transformers>=2.6.1
+pypdf>=4.1.0
+python-dotenv>=1.0.1
+pydantic>=2.6.4
+st-copy-to-clipboard
